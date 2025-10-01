@@ -1,0 +1,58 @@
+services:
+# Infraestructure
+  mysql:
+    image: docker.io/bitnami/mysql:8.4
+    ports:
+      - '3306:3306'
+    volumes:
+      - 'mysql_data:/bitnami/mysql/data'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    healthcheck:
+      test: ['CMD', '/opt/bitnami/scripts/mysql/healthcheck.sh']
+      interval: 15s
+      timeout: 5s
+      retries: 6
+# app services
+  service-data-access:
+    image: node:20.19-bullseye
+    working_dir: /home/node/app
+    user: "node"  
+    environment:
+      - NODE_ENV=development
+    command: "sh -c 'npm install && npm run start:dev && tail -f /dev/null'"
+    ports:
+      - '8001:8001'
+    volumes:
+      - './service-data-access-layer:/home/node/app'
+  service-business-logic:
+    image: node:20.19-bullseye
+    working_dir: /home/node/app
+    user: "node"  
+    environment:
+      - NODE_ENV=development
+    command: "sh -c 'npm install && npm run start:dev && tail -f /dev/null'"
+    ports:
+      - '8002:8002'
+    volumes:
+      - './service-business-logic-layer:/home/node/app'
+  front:
+    image: node:20.19-bullseye
+    working_dir: /home/node/app
+    user: "node"  
+    environment:
+      - NODE_ENV=development
+    command: "sh -c 'npm install && npm run dev && tail -f /dev/null'"
+    ports:
+      - '3000:3000'
+    volumes:
+      - './front-react-web-app:/home/node/app'
+
+#networks and volumes config
+networks:
+  default:
+    name: virtual_wallet_network
+
+volumes:
+  mysql_data:
+    driver: local
