@@ -1,6 +1,5 @@
 front-react-web-app
 service-business-logic-layer
-service-data-access-layer
 node_modules
 build
 .env

@@ -1,0 +1,69 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Client {
+  id        String   @id @default(uuid())
+  document  String   @unique
+  fullName  String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  wallets   Wallet[]
+}
+
+model Wallet {
+  id        String   @id @default(uuid())
+  clientId  String
+  client    Client   @relation(fields: [clientId], references: [id])
+  phone     String   @unique 
+  balance   Float    @default(0.0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  transactions Transaction[]
+  sessions  Session[]
+}
+
+model Transaction {
+  id            String   @id @default(uuid())
+  walletId      String
+  wallet        Wallet   @relation(fields: [walletId], references: [id])
+  type          String   
+  amount        Float
+  description   String?
+  createdAt     DateTime @default(now())
+  sessionId     String
+  session       Session @relation(fields: [sessionId], references: [id])
+}
+
+model Session {
+  id            String   @id @default(uuid())
+  walletId      String
+  wallet        Wallet   @relation(fields: [walletId], references: [id])
+  transactions  Transaction[]
+  tokens        Token[]
+  createdAt     DateTime @default(now())
+  expiresAt     DateTime 
+}
+
+model Token {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  sessionId String?  
+  session   Session? @relation(fields: [sessionId], references: [id])
+  createdAt DateTime @default(now())
+  expiresAt DateTime 
+}
