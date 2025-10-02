@@ -45,16 +45,24 @@ model Transaction {
   description   String?
   createdAt     DateTime @default(now())
   sessionId     Int?     @unique
-  session       Session? @relation
+  session       Session? @relation(fields: [sessionId], references: [id])
 }
 
 model Session {
   id            Int      @id @default(autoincrement())
   walletId      Int
   wallet        Wallet   @relation(fields: [walletId], references: [id])
-  token         String   @unique 
-  transaction   Transaction? @relation(fields: [transactionId], references: [id])
-  transactionId Int?     @unique
+  transactions   Transaction[]
+  tokens         Token[]
   createdAt     DateTime @default(now())
   expiresAt     DateTime 
+}
+
+model Token {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  sessionId     Int?     @unique
+  session       Session? @relation(fields: [sessionId], references: [id])
+  createdAt DateTime @default(now())
+  expiresAt DateTime 
 }
