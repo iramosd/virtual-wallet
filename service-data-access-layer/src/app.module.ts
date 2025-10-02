@@ -4,13 +4,18 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { appConfig } from './config/app.config';
 import { ClientModule } from './client/client.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({
+  imports: [
+    ConfigModule.forRoot({
       load: [() => appConfig], 
       isGlobal: true, 
       envFilePath: ['.env.local', '.env'],
-    }), ClientModule],
+    }), 
+    PrismaModule,
+    ClientModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
