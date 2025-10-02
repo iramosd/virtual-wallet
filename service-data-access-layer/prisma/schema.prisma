@@ -15,9 +15,9 @@ datasource db {
 }
 
 model Client {
-  id        Int      @id @default(autoincrement())
-  document String   @unique
-  fullName   String
+  id        String   @id @default(uuid())
+  document  String   @unique
+  fullName  String
   email     String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -25,10 +25,10 @@ model Client {
 }
 
 model Wallet {
-  id        Int      @id @default(autoincrement())
-  clientId Int
-  client   Client  @relation(fields: [clientId], references: [id])
-  phone   String   @unique 
+  id        String   @id @default(uuid())
+  clientId  String
+  client    Client   @relation(fields: [clientId], references: [id])
+  phone     String   @unique 
   balance   Float    @default(0.0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -37,32 +37,32 @@ model Wallet {
 }
 
 model Transaction {
-  id            Int      @id @default(autoincrement())
-  walletId      Int
+  id            String      @id @default(uuid())
+  walletId      String
   wallet        Wallet   @relation(fields: [walletId], references: [id])
   type          String   
   amount        Float
   description   String?
   createdAt     DateTime @default(now())
-  sessionId     Int?     @unique
+  sessionId     String?     @unique
   session       Session? @relation(fields: [sessionId], references: [id])
 }
 
 model Session {
-  id            Int      @id @default(autoincrement())
-  walletId      Int
+  id            String   @id @default(uuid())
+  walletId      String
   wallet        Wallet   @relation(fields: [walletId], references: [id])
-  transactions   Transaction[]
-  tokens         Token[]
+  transactions  Transaction[]
+  tokens        Token[]
   createdAt     DateTime @default(now())
   expiresAt     DateTime 
 }
 
 model Token {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   token     String   @unique
-  sessionId     Int?     @unique
-  session       Session? @relation(fields: [sessionId], references: [id])
+  sessionId String?     @unique
+  session   Session? @relation(fields: [sessionId], references: [id])
   createdAt DateTime @default(now())
   expiresAt DateTime 
 }
