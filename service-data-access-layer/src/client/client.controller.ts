@@ -8,7 +8,6 @@ export class ClientController {
   constructor(private readonly clientService: ClientService) {}
 
   @Post()
-  @HttpCode(HttpStatus.CREATED)
   async create(@Body() createClientDto: CreateClientDto): Promise<any> {
     return this.clientService.create(createClientDto);
   }

@@ -8,7 +8,6 @@ export class WalletController {
   constructor(private readonly walletService: WalletService) {}
 
   @Post()
-  @HttpCode(HttpStatus.CREATED)
   async create(@Body() createWalletDto: CreateWalletDto): Promise<any> {
     return this.walletService.create(createWalletDto);
   }
