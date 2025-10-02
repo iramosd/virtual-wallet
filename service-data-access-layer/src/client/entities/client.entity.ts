@@ -3,6 +3,7 @@ export class Client {
   document: string;
   fullName: string;
   email: string;
+  password: string;
   createdAt: Date;
   updatedAt: Date;
 }

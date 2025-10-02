@@ -3,17 +3,28 @@ import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { PrismaService } from '../prisma/prisma.service';
 import { Client } from './entities/client.entity';
+import { ResponseClientDto } from './dto/response-client.dto';
 
 @Injectable()
 export class ClientService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createClientDto: CreateClientDto): Promise<Client> {
+  private excludePassword(client: Client | Client[]): ResponseClientDto | ResponseClientDto[] {
+    
+    if (Array.isArray(client)) {
+      return client.map(({ password, ...responseClient }) => responseClient);
+    }
+
+    const { password, ...responseClient } = client;
+    return responseClient;
+  }
+
+  async create(createClientDto: CreateClientDto): Promise<ResponseClientDto> {
     try {
       const client = await this.prisma.client.create({
         data: createClientDto,
       });
-      return client;
+      return this.excludePassword(client) as ResponseClientDto;
     } catch (error) {
       if (error.code === 'P2002') {
         throw new ConflictException('Client with this document or email already exists');
@@ -22,15 +33,17 @@ export class ClientService {
     }
   }
 
-  async findAll(): Promise<Client[]> {
-    return this.prisma.client.findMany({
+  async findAll(): Promise<ResponseClientDto[]> {
+    const clients = await this.prisma.client.findMany({
       orderBy: {
         createdAt: 'desc',
       },
     });
+
+    return this.excludePassword(clients) as ResponseClientDto[];
   }
 
-  async findOne(id: string): Promise<Client> {
+  async findOne(id: string): Promise<ResponseClientDto> {
     const client = await this.prisma.client.findUnique({
       where: { id },
     });
@@ -39,10 +52,10 @@ export class ClientService {
       throw new NotFoundException(`Client with ID ${id} not found`);
     }
 
-    return client;
+    return this.excludePassword(client) as ResponseClientDto;
   }
 
-  async findByDocument(document: string): Promise<Client> {
+  async findByDocument(document: string): Promise<ResponseClientDto> {
     const client = await this.prisma.client.findUnique({
       where: { document },
     });
@@ -51,10 +64,10 @@ export class ClientService {
       throw new NotFoundException(`Client with document ${document} not found`);
     }
 
-    return client;
+    return this.excludePassword(client) as ResponseClientDto;
   }
 
-  async findByEmail(email: string): Promise<Client> {
+  async findByEmail(email: string): Promise<ResponseClientDto> {
     const client = await this.prisma.client.findUnique({
       where: { email },
     });
@@ -63,16 +76,16 @@ export class ClientService {
       throw new NotFoundException(`Client with email ${email} not found`);
     }
 
-    return client;
+    return this.excludePassword(client) as ResponseClientDto;
   }
 
-  async update(id: string, updateClientDto: UpdateClientDto): Promise<Client> {
+  async update(id: string, updateClientDto: UpdateClientDto): Promise<ResponseClientDto> {
     try {
       const client = await this.prisma.client.update({
         where: { id },
         data: updateClientDto,
       });
-      return client;
+      return this.excludePassword(client) as ResponseClientDto;
     } catch (error) {
       if (error.code === 'P2025') {
         throw new NotFoundException(`Client with ID ${id} not found`);
@@ -84,12 +97,12 @@ export class ClientService {
     }
   }
 
-  async remove(id: string): Promise<Client> {
+  async remove(id: string): Promise<ResponseClientDto> {
     try {
       const client = await this.prisma.client.delete({
         where: { id },
       });
-      return client;
+      return this.excludePassword(client) as ResponseClientDto;
     } catch (error) {
       if (error.code === 'P2025') {
         throw new NotFoundException(`Client with ID ${id} not found`);

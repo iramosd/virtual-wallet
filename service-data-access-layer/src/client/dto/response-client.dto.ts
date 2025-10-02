@@ -1,6 +1,6 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateClientDto {
+export class ResponseClientDto {
   @IsNotEmpty()
   @IsString()
   document: string;
@@ -12,8 +12,4 @@ export class CreateClientDto {
   @IsNotEmpty()
   @IsEmail()
   email: string;
-
-  @IsNotEmpty()
-  @IsString()
-  password: string;
 }
