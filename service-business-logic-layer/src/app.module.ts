@@ -11,7 +11,9 @@ import { ClientModule } from './client/client.module';
       load: [() => appConfig], 
       isGlobal: true, 
       envFilePath: ['.env.local', '.env'],
-    }), ClientModule],
+    }), 
+    ClientModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
