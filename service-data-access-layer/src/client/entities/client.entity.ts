@@ -4,6 +4,7 @@ export class Client {
   fullName: string;
   email: string;
   password: string;
+  walletId: string;
   createdAt: Date;
   updatedAt: Date;
 }

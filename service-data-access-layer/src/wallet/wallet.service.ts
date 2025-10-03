@@ -11,19 +11,8 @@ export class WalletService {
 
   async create(createWalletDto: CreateWalletDto): Promise<ResponseWalletDto> {
     try {
-      const client = await this.prisma.client.findUnique({
-        where: { id: createWalletDto.clientId }
-      });
-
-      if (!client) {
-        throw new NotFoundException(`Client with ID ${createWalletDto.clientId} not found`);
-      }
-
       const wallet = await this.prisma.wallet.create({
-        data: createWalletDto,
-        include: {
-          client: true
-        }
+        data: createWalletDto
       });
 
       return this.formatWalletResponse(wallet);
@@ -61,20 +50,6 @@ export class WalletService {
     }
 
     return this.formatWalletResponse(wallet);
-  }
-
-  async findByClientId(clientId: string): Promise<ResponseWalletDto[]> {
-    const wallets = await this.prisma.wallet.findMany({
-      where: { clientId },
-      include: {
-        client: true
-      },
-      orderBy: {
-        createdAt: 'desc',
-      }
-    });
-
-    return wallets.map(wallet => this.formatWalletResponse(wallet));
   }
 
   async findByPhone(phone: string): Promise<ResponseWalletDto> {

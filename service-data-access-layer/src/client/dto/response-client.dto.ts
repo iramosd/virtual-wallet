@@ -12,4 +12,8 @@ export class ResponseClientDto {
   @IsNotEmpty()
   @IsEmail()
   email: string;
+
+  @IsNotEmpty()
+  @IsString()
+  walletId: string;
 }

@@ -17,11 +17,6 @@ export class WalletController {
     return this.walletService.findAll();
   }
 
-  @Get('client/:clientId')
-  async findByClientId(@Param('clientId') clientId: string): Promise<any> {
-    return this.walletService.findByClientId(clientId);
-  }
-
   @Get('phone/:phone')
   async findByPhone(@Param('phone') phone: string): Promise<any> {
     return this.walletService.findByPhone(phone);
