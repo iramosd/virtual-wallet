@@ -1,25 +1,68 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  ExceptionFilter,
+  Catch,
+  ArgumentsHost,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
+import { Response } from 'express';
 
 @Catch()
-export class AllExceptionsFilter implements ExceptionFilter {
-  catch(exception: unknown, host: ArgumentsHost) {
+export class HttpExceptionFilter implements ExceptionFilter {
+  catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const response = ctx.getResponse();
+    const response = ctx.getResponse<Response>();
+    
+    if (exception.status && exception.status === 'error') {
+      response.status(exception.code).json(exception);
+      return;
+    }
 
     if (exception instanceof HttpException) {
       const status = exception.getStatus();
-      const res = exception.getResponse();
+      const exceptionResponse = exception.getResponse();
 
-      if (status === HttpStatus.BAD_REQUEST && Array.isArray((res as any).message)) {
-        const validationMessages = (res as any).message as any[];
-        const mapped = validationMessages.map((m) => (typeof m === 'string' ? m : JSON.stringify(m)));
-        return response.status(status).json({ status: 'error', message: mapped.join('; ') });
-      }
+      const errorResponse = {
+        message: this.getErrorMessage(status, exceptionResponse),
+        status: 'error',
+        code: status,
+      };
 
-      const message = (res && (res as any).message) ? (res as any).message : (exception as any).message;
-      return response.status(status).json({ status: 'error', message });
+      response.status(status).json(errorResponse);
+      return;
     }
 
-    return response.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ status: 'error', message: 'Internal server error' });
+    const status = HttpStatus.INTERNAL_SERVER_ERROR;
+    const errorResponse = {
+      message: 'Error interno del servidor',
+      status: 'error',
+      code: status,
+    };
+
+    response.status(status).json(errorResponse);
+  }
+
+  private getErrorMessage(status: number, exceptionResponse: any): string {
+    if (typeof exceptionResponse === 'object' && exceptionResponse.message) {
+      return Array.isArray(exceptionResponse.message)
+        ? exceptionResponse.message.join(', ')
+        : exceptionResponse.message;
+    }
+
+    const errorMessages: Record<number, string> = {
+      [HttpStatus.BAD_REQUEST]: 'Solicitud incorrecta',
+      [HttpStatus.UNAUTHORIZED]: 'No autorizado',
+      [HttpStatus.FORBIDDEN]: 'Acceso prohibido',
+      [HttpStatus.NOT_FOUND]: 'Recurso no encontrado',
+      [HttpStatus.METHOD_NOT_ALLOWED]: 'Método no permitido',
+      [HttpStatus.CONFLICT]: 'Conflicto en la solicitud',
+      [HttpStatus.UNPROCESSABLE_ENTITY]: 'Entidad no procesable',
+      [HttpStatus.INTERNAL_SERVER_ERROR]: 'Error interno del servidor',
+      [HttpStatus.BAD_GATEWAY]: 'Puerta de enlace incorrecta',
+      [HttpStatus.SERVICE_UNAVAILABLE]: 'Servicio no disponible',
+      [HttpStatus.GATEWAY_TIMEOUT]: 'Tiempo de espera agotado',
+    };
+
+    return errorMessages[status] || 'Error desconocido';
   }
 }
