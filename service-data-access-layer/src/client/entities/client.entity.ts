@@ -4,7 +4,7 @@ export class Client {
   fullName: string;
   email: string;
   password: string;
-  walletId: string;
+  walletId?: string  | null;
   createdAt: Date;
   updatedAt: Date;
 }

@@ -19,5 +19,5 @@ export class CreateClientDto {
 
   @IsOptional()
   @IsString()
-  walletId?: string;
+  walletId?: string | null;
 }
