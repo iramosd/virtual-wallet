@@ -4,6 +4,7 @@ import { appConfig } from './config/app.config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ClientModule } from './client/client.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [ 
@@ -12,7 +13,7 @@ import { ClientModule } from './client/client.module';
       isGlobal: true, 
       envFilePath: ['.env.local', '.env'],
     }), 
-    ClientModule
+    ClientModule, AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -19,5 +19,6 @@ import { ClientController } from './client.controller';
   ],
   controllers: [ClientController],
   providers: [ClientService],
+  exports: [ClientService],
 })
 export class ClientModule {}

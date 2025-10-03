@@ -8,10 +8,19 @@ import { Client } from './entities/client.entity';
 
 @Injectable()
 export class ClientService {
+
   constructor(private readonly httpService: HttpService) {}
 
-  create(createClientDto: CreateClientDto) {
-    return 'This action adds a new client';
+  async create(createClientDto: CreateClientDto) {
+    try {
+      const response = await firstValueFrom(
+        this.httpService.post('/', createClientDto)
+      );
+
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
   }
 
   async findAll() {
@@ -19,6 +28,7 @@ export class ClientService {
       const response = await firstValueFrom(
         this.httpService.get('/')
       );
+
       return response.data;
     } catch (error) {
       throw error;
