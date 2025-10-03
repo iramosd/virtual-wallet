@@ -46,9 +46,6 @@ export class ClientService {
   async findOne(id: string): Promise<ResponseClientDto> {
     const client = await this.prisma.client.findUnique({
       where: { id },
-      include: {
-      wallet: true,
-  },
     });
 
     if (!client) {

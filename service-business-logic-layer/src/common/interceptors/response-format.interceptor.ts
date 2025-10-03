@@ -29,7 +29,7 @@ export class ResponseFormatInterceptor<T>
         const statusCode = response.statusCode;
 
         return {
-          data: data,
+          data: data.data,
           status: 'éxito',
           code: statusCode,
         };
