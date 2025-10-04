@@ -23,12 +23,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Verificar sesión existente desde localStorage y cookies
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
       setUser(JSON.parse(savedUser));
     } else {
-      // Si no hay en localStorage, verificar cookies
       const cookies = document.cookie.split(';');
       const userCookie = cookies.find(cookie => cookie.trim().startsWith('user='));
       if (userCookie) {
@@ -86,10 +84,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const register = async (name: string, email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
     try {
-      // Simular llamada a API
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Simular registro exitoso
       const userData = {
         id: Date.now().toString(),
         email,
@@ -97,7 +93,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       };
       setUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));
-      // También establecer cookie para el middleware
       document.cookie = `user=${JSON.stringify(userData)}; path=/; max-age=86400`;
       return true;
     } catch (error) {
@@ -110,7 +105,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = () => {
     setUser(null);
     localStorage.removeItem('user');
-    // Eliminar cookie para el middleware
     document.cookie = 'user=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
   };
 
