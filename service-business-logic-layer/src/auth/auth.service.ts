@@ -7,9 +7,18 @@ import { ClientService } from '../client/client.service';
 export class AuthService {
   constructor(private readonly clientService: ClientService) {}
 
-  signUp(signUpDto: SignUpDto) {
+  async signUp(signUpDto: SignUpDto) {
+    let client = null;
     const { phone, ...clientData } = signUpDto;
-    const client = this.clientService.create(clientData);
+    const { status, data } = await this.clientService.create(clientData);
+    
+    if (status === 'success' && typeof data?.id === 'string' && data?.id.length > 0) {
+      client = data;
+
+      
+    }
+  
+    return client;
   }
 
   findAll() {

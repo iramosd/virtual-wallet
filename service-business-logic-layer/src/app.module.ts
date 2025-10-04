@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ClientModule } from './client/client.module';
 import { AuthModule } from './auth/auth.module';
+import { WalletModule } from './wallet/wallet.module';
 
 @Module({
   imports: [ 
@@ -13,7 +14,7 @@ import { AuthModule } from './auth/auth.module';
       isGlobal: true, 
       envFilePath: ['.env.local', '.env'],
     }), 
-    ClientModule, AuthModule
+    ClientModule, AuthModule, WalletModule
   ],
   controllers: [AppController],
   providers: [AppService],
