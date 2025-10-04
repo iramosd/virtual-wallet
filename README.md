@@ -27,11 +27,11 @@ Al ejecutarlo, se crearán cuatro contenedores:
 git clone https://github.com/iramosd/virtual-wallet
 cd virtual-wallet
 
-### 2. Correr contenedores
+### 2. Renombrar archivos .env
 Renombrar archivos .env.example en la raiz de cada proyecto
 
 ### 3. Correr contenedores
 docker compose up -d
 
-### 4. Correr contenedores
-Detener contenedores
+### 4. Detener contenedores
+docker compose down
