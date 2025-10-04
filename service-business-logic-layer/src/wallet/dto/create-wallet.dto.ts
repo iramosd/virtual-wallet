@@ -1,3 +1,11 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsNumber, isEmpty, IsOptional } from 'class-validator';
 
-export class CreateWalletDto {}
+export class CreateWalletDto {
+  @IsNotEmpty()
+  @IsString()
+  phone: string;
+
+  @IsOptional()
+  @IsNumber()
+  balance?: number;
+}

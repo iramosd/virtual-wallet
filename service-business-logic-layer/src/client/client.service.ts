@@ -47,11 +47,27 @@ export class ClientService {
     }
   }
 
-  update(id: string, updateClientDto: UpdateClientDto) {
-    return `This action updates a #${id} client`;
+  async update(id: string, updateClientDto: UpdateClientDto) {
+     try {
+      const response = await firstValueFrom(
+        this.httpService.patch(`/${id}`, updateClientDto)
+      );
+
+      return response.data;      
+    } catch (error) {
+      throw error;
+    }
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} client`;
+  async remove(id: string) {
+     try {
+      const response = await firstValueFrom(
+        this.httpService.delete(`/${id}`)
+      );
+
+      return response.data;      
+    } catch (error) {
+      throw error;
+    }
   }
 }

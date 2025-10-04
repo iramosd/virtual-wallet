@@ -1,11 +1,23 @@
+import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
+import { firstValueFrom } from 'rxjs';
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { UpdateWalletDto } from './dto/update-wallet.dto';
 
 @Injectable()
 export class WalletService {
-  create(createWalletDto: CreateWalletDto) {
-    return 'This action adds a new wallet';
+  constructor(private readonly httpService: HttpService) {}
+
+  async create(createWalletDto: CreateWalletDto) {
+   try {
+         const response = await firstValueFrom(
+           this.httpService.post('/', createWalletDto)
+         );
+   
+         return response.data;
+       } catch (error) {
+         throw error;
+       }
   }
 
   findAll() {

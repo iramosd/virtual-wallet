@@ -4,6 +4,7 @@ export interface AppConfig {
   dataAccessApiUrl: string;
   environment: string;
   version: string;
+  saltOrRounds: number;
 }
 
 export const appConfig: AppConfig = {
@@ -12,4 +13,5 @@ export const appConfig: AppConfig = {
   dataAccessApiUrl: process.env.DATA_ACCESS_API_URL || 'http://localhost:8001/api',
   environment: process.env.NODE_ENV || 'development',
   version: process.env.APP_VERSION || '1.0.0',
+  saltOrRounds: 10
 };

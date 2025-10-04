@@ -55,7 +55,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       [HttpStatus.FORBIDDEN]: 'Acceso prohibido',
       [HttpStatus.NOT_FOUND]: 'Recurso no encontrado',
       [HttpStatus.METHOD_NOT_ALLOWED]: 'Método no permitido',
-      [HttpStatus.CONFLICT]: 'Conflicto en la solicitud',
+      [HttpStatus.CONFLICT]: 'Conflicto en la solicitud. El recurso ya existe',
       [HttpStatus.UNPROCESSABLE_ENTITY]: 'Entidad no procesable',
       [HttpStatus.INTERNAL_SERVER_ERROR]: 'Error interno del servidor',
       [HttpStatus.BAD_GATEWAY]: 'Puerta de enlace incorrecta',
