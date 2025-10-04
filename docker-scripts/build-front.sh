@@ -1,7 +1,6 @@
 #!/bin/bash
 npm install
-npx prisma migrate deploy
 npm run build
-npm run start:prod
+npm run start
 
 tail -f /dev/null

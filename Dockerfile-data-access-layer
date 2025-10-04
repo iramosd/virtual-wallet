@@ -1,6 +1,6 @@
 FROM docker.io/node:20.19-bullseye
 
-RUN apt update && apt install -y dos2unix
+RUN apt-get update && apt-get install -y dos2unix
 
 COPY docker-scripts/build-data-access-layer.sh /usr/local/bin/build-project.sh
 

@@ -42,17 +42,19 @@ services:
       - '8002:8002'
     volumes:
       - './service-business-logic-layer:/home/node/app'
-  # front:
-  #   image: node:20.19-bullseye
-  #   working_dir: /home/node/app
-  #   user: "node"  
-  #   environment:
-  #     - NODE_ENV=development
-  #   command: "sh -c 'npm install && npm run dev && tail -f /dev/null'"
-  #   ports:
-  #     - '3000:3000'
-  #   volumes:
-  #     - './front-react-web-app:/home/node/app'
+  front:
+    build:
+      context: .
+      dockerfile: Dockerfile-front
+    working_dir: /home/node/app
+    user: "node"  
+    environment:
+      - NODE_ENV=development
+    command: "sh -c '/usr/local/bin/build-project.sh'"
+    ports:
+      - '3000:3000'
+    volumes:
+      - './react-web-app:/home/node/app'
 
 #networks and volumes config
 networks:
