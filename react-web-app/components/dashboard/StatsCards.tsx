@@ -1,12 +1,7 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { 
-  Wallet, 
-  CreditCard, 
-  TrendingUp, 
-  Users
-} from 'lucide-react';
+import { Wallet, CreditCard, TrendingUp, Users } from 'lucide-react';
 
 interface StatCard {
   title: string;
