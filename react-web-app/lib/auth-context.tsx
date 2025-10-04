@@ -7,9 +7,9 @@ interface User {
   fullName: string;
   email: string;
   document: string;
-  session?: any;
-  wallet?: any;
-  walletId?: string;
+  session?: unknown  | null;
+  wallet?: unknown  | null;
+  walletId?: string | null;
 }
 
 interface AuthContextType {
@@ -89,10 +89,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      const userData = {
+      const userData: User = {
         id: Date.now().toString(),
         email,
-        name
+        fullName: name,
+        document: '' 
       };
       setUser(userData);
       localStorage.setItem('user', JSON.stringify(userData));

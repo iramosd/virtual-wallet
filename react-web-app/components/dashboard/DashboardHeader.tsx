@@ -43,7 +43,7 @@ export default function DashboardHeader() {
             </Button>
             <div className="flex items-center space-x-2">
               <div className="text-sm">
-                <p className="font-medium text-gray-900">{user.name}</p>
+                <p className="font-medium text-gray-900">{user.fullName}</p>
                 <p className="text-gray-500">{user.email}</p>
               </div>
               <Button variant="outline" size="sm" onClick={handleLogout}>

@@ -12,9 +12,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { useAuth } from '@/lib/auth-context';
+import { useRegister } from '@/hooks';
 
 const registerSchema = z.object({
+  document: z.string().min(1, 'El documento es requerido'),
+  phone: z.string().min(1, 'El teléfono es requerido'),
   name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
   email: z.string().email('Email inválido'),
   password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres'),
@@ -29,8 +31,7 @@ type RegisterForm = z.infer<typeof registerSchema>;
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { register } = useAuth();
+  const { register, loading, error, success } = useRegister();
   const router = useRouter();
 
   const form = useForm<RegisterForm>({
@@ -40,26 +41,17 @@ export default function RegisterPage() {
       email: '',
       password: '',
       confirmPassword: '',
+      document: '', 
+      phone: '',
     },
   });
 
   const onSubmit = async (data: RegisterForm) => {
-    setIsSubmitting(true);
-    try {
-      const success = await register(data.name, data.email, data.password);
-      if (success) {
+    const success = await register(data);
+    if (success) {
+      setTimeout(() => {
         router.push('/dashboard');
-      } else {
-        form.setError('root', {
-          message: 'Error al crear la cuenta. Intenta nuevamente.',
-        });
-      }
-    } catch (error) {
-      form.setError('root', {
-        message: 'Error al crear la cuenta. Intenta nuevamente.',
-      });
-    } finally {
-      setIsSubmitting(false);
+      }, 1500);
     }
   };
 
@@ -81,6 +73,27 @@ export default function RegisterPage() {
           <CardContent>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormField
+                  control={form.control}
+                  name="document"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Documento de identidad</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <User className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                          <Input
+                            placeholder="Ingrese su documento de identidad"
+                            className="pl-10"
+                            {...field}
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 <FormField
                   control={form.control}
                   name="name"
@@ -113,6 +126,27 @@ export default function RegisterPage() {
                           <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
                           <Input
                             placeholder="tu@email.com"
+                            className="pl-10"
+                            {...field}
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Teléfono</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Mail className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                          <Input
+                            placeholder="+57 316 4181845"
                             className="pl-10"
                             {...field}
                           />
@@ -181,18 +215,24 @@ export default function RegisterPage() {
                   )}
                 />
 
-                {form.formState.errors.root && (
+                {error && (
                   <div className="text-sm text-red-600 bg-red-50 p-3 rounded-md">
-                    {form.formState.errors.root.message}
+                    {error}
+                  </div>
+                )}
+
+                {success && (
+                  <div className="text-sm text-green-600 bg-green-50 p-3 rounded-md">
+                    ¡Cuenta creada exitosamente! Redirigiendo...
                   </div>
                 )}
 
                 <Button
                   type="submit"
                   className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
-                  disabled={isSubmitting}
+                  disabled={loading}
                 >
-                  {isSubmitting ? (
+                  {loading ? (
                     <div className="flex items-center">
                       <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
                       Creando cuenta...
