@@ -58,7 +58,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     const data = await response.json();
-    console.log("Response Body: ", data);
 
     if (!data.data) {
       throw new Error('Error de autenticación');
