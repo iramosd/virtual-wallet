@@ -9,7 +9,7 @@ export interface AppConfig {
 
 export const appConfig: AppConfig = {
   port: process.env.API_PORT ? parseInt(process.env.API_PORT) : 8002,
-  apiKey: process.env.API_KEY || 'sk_test_api_key',
+  apiKey: process.env.API_KEY || 'TEST_KEY_123456789',
   dataAccessApiUrl: process.env.DATA_ACCESS_API_URL || 'http://localhost:8001/api',
   environment: process.env.NODE_ENV || 'development',
   version: process.env.APP_VERSION || '1.0.0',
