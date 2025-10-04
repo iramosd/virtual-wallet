@@ -44,7 +44,6 @@ export class ClientController {
     @Param('id') id: string,
     @Query('withwallet') withWallet: boolean = false,
   ): Promise<any> {
-    console.log("With wallet", withWallet);
     return this.clientService.findOne(id, withWallet);
   }
 

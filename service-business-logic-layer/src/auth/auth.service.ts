@@ -7,6 +7,7 @@ import { LoginAuthDto } from './dto/login-auth.dto';
 import { ClientService } from '../client/client.service';
 import { WalletService } from '../wallet/wallet.service';
 import { SessionService } from '../session/session.service';
+import { Session } from '../session/entities/session.entity';
 
 @Injectable()
 export class AuthService {
@@ -64,6 +65,22 @@ export class AuthService {
     } else {
       throw new UnauthorizedException('Los datos no son correctos');
     }
+  }
+
+   async logout() {
+    return true;
+  }
+
+  async extractSessionFromAuthorizationHeader(authorization?: string | string[]): Promise<any> {
+    const header = Array.isArray(authorization) ? authorization[0] : authorization;
+    const [type, token] = header?.split(' ') ?? [];
+    const sessionId: string | null = type === 'Bearer' ? token : null;
+
+    if (!sessionId) {
+      throw new UnauthorizedException('No se pudo recuperar la sesión');
+    }
+
+    return await this.sessionService.findOne(sessionId);
   }
 
 }

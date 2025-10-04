@@ -3,6 +3,8 @@ import { HttpModule } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { TransactionService } from './transaction.service';
 import { TransactionController } from './transaction.controller';
+import { AuthModule } from '../auth/auth.module';
+import { SessionModule } from '../session/session.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { TransactionController } from './transaction.controller';
           },
         }),
       }),
+      AuthModule, 
+      SessionModule
     ],
   controllers: [TransactionController],
   providers: [TransactionService],

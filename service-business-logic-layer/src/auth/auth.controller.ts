@@ -15,6 +15,11 @@ export class AuthController {
     return this.authService.login(loginDto);
   }
 
+  @Post('logout')
+  logout() {
+    return this.authService.logout();
+  }
+
   @Public()
   @Post('signup')
   signUp(@Body() signUpDto: SignUpDto) {
