@@ -122,7 +122,6 @@ console.log("Result", result);
   };
 }
 
-// Hook adicional para validaciones en tiempo real
 export function useRegisterValidation() {
   const [errors, setErrors] = useState<Partial<RegisterData>>({});
 
@@ -171,23 +170,19 @@ export function useRegisterValidation() {
   const validateAll = (data: RegisterData) => {
     const newErrors: Partial<RegisterData> = {};
 
-    // Validar nombre
     if (data.name.trim().length < 2) {
       newErrors.name = 'El nombre debe tener al menos 2 caracteres';
     }
 
-    // Validar email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(data.email)) {
       newErrors.email = 'El formato del email no es válido';
     }
 
-    // Validar contraseña
     if (data.password.length < 6) {
       newErrors.password = 'La contraseña debe tener al menos 6 caracteres';
     }
 
-    // Validar confirmación de contraseña
     if (data.password !== data.confirmPassword) {
       newErrors.confirmPassword = 'Las contraseñas no coinciden';
     }
