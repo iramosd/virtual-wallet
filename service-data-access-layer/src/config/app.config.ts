@@ -21,7 +21,7 @@ export const appConfig: AppConfig = {
     password: process.env.DB_PASSWORD || '',
     database: process.env.DB_NAME || 'virtual_wallet',
   },
-  apiKey: process.env.API_KEY || 'default-api-key',
+  apiKey: process.env.API_KEY || 'sk_test_api_key',
   environment: process.env.NODE_ENV || 'development',
   version: process.env.APP_VERSION || '1.0.0',
 };
