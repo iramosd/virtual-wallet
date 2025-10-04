@@ -2,7 +2,6 @@
 
 import ProtectedRoute from '@/components/protected-route';
 import { DashboardHeader, DashboardWelcome, StatsCards, ActivityCard, MetricsCard } from '@/components/dashboard';
-import { useWallet } from '@/hooks';
 
 export default function DashboardPage() {
   return (

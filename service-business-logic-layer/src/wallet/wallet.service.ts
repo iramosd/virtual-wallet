@@ -32,12 +32,12 @@ export class WalletService {
        }
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     try {
          const response = await firstValueFrom(
            this.httpService.get(`/${id}`)
          );
-   
+         console.log('Response Data:', response.data);
          return response.data;
        } catch (error) {
          throw error;
