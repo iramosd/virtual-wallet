@@ -9,8 +9,8 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('login')
-  login(@Body() signUpDto: LoginAuthDto) {
-    return {status: 403, message: "Login"};
+  login(@Body() loginDto: LoginAuthDto) {
+    return this.authService.login(loginDto);
   }
 
   @Post('signup')
@@ -18,15 +18,9 @@ export class AuthController {
     return this.authService.signUp(signUpDto);
   }
 
-
-  @Get()
-  findAll() {
-    return this.authService.findAll();
-  }
-
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
+  findOne(@Param('id') id: number) {
+    return this.authService.findOne(id);
   }
 
   @Patch(':id')

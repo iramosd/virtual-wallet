@@ -70,7 +70,7 @@ export class ClientService {
     return this.excludePassword(client) as ResponseClientDto;
   }
 
-  async findByEmail(email: string, withWallet: boolean = false): Promise<ResponseClientDto> {
+  async findByEmail(email: string, withWallet: boolean = false, withPassword: boolean = false): Promise<ResponseClientDto> {
     const client = await this.prisma.client.findUnique({
       where: { email },
       include: {
@@ -82,7 +82,7 @@ export class ClientService {
       throw new NotFoundException(`Client with email ${email} not found`);
     }
 
-    return this.excludePassword(client) as ResponseClientDto;
+    return withPassword ? client : this.excludePassword(client) as ResponseClientDto;
   }
 
   async update(id: string, updateClientDto: UpdateClientDto): Promise<ResponseClientDto> {

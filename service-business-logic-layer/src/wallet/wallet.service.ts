@@ -9,7 +9,7 @@ export class WalletService {
   constructor(private readonly httpService: HttpService) {}
 
   async create(createWalletDto: CreateWalletDto) {
-   try {
+    try {
          const response = await firstValueFrom(
            this.httpService.post('/', createWalletDto)
          );
@@ -20,19 +20,51 @@ export class WalletService {
        }
   }
 
-  findAll() {
-    return `This action returns all wallet`;
+  async findAll() {
+    try {
+         const response = await firstValueFrom(
+           this.httpService.get('/')
+         );
+   
+         return response.data;
+       } catch (error) {
+         throw error;
+       }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} wallet`;
+  async findOne(id: number) {
+    try {
+         const response = await firstValueFrom(
+           this.httpService.get(`/${id}`)
+         );
+   
+         return response.data;
+       } catch (error) {
+         throw error;
+       };
   }
 
-  update(id: number, updateWalletDto: UpdateWalletDto) {
-    return `This action updates a #${id} wallet`;
+  async update(id: number, updateWalletDto: UpdateWalletDto) {
+    try {
+         const response = await firstValueFrom(
+           this.httpService.patch(`/${id}`, updateWalletDto)
+         );
+   
+         return response.data;
+       } catch (error) {
+         throw error;
+       }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} wallet`;
-  }
+  async remove(id: number) {
+    try {
+         const response = await firstValueFrom(
+           this.httpService.delete(`/${id}`)
+         );
+   
+         return response.data;
+       } catch (error) {
+         throw error;
+       }
+    }
 }

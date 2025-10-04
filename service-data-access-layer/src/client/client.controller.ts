@@ -25,9 +25,10 @@ export class ClientController {
   @Get('email/:email')
   async findByEmail(
     @Param('email') email: string,
-    @Query('withwallet') withWallet: boolean = false
+    @Query('withwallet') withWallet: boolean = false,
+    @Query('withpassword') withPassword: boolean = false
   ): Promise<any> {
-    return this.clientService.findByEmail(email);
+    return this.clientService.findByEmail(email, withWallet, withPassword);
   }
 
   @Get(':id')

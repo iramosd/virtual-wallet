@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { SignUpDto } from './dto/signup-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { ClientService } from '../client/client.service';
 import { WalletService } from '../wallet/wallet.service';
 import { ConfigService } from '@nestjs/config';
+import { LoginAuthDto } from './dto/login-auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -32,19 +33,21 @@ export class AuthService {
     return client;
   }
 
-  findAll() {
-    return `This action returns all auth`;
+  async login(loginAuthDto: LoginAuthDto) {
+    let isMatch: boolean = false;
+
+    const clientResponse = await this.clientService.findOneByEmail(loginAuthDto.email, true, true);
+
+    if (clientResponse.status === 'success' && clientResponse.data) {
+      isMatch = await bcrypt.compare(loginAuthDto.password, clientResponse.data.password);
+    }
+    
+    if (isMatch) {
+      delete clientResponse.data.password;
+      return clientResponse;
+    } else {
+      throw new UnauthorizedException('Los datos no son correctos');
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
-  }
 }

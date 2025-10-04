@@ -35,10 +35,22 @@ export class ClientService {
     }
   }
 
-  async findOne(id: string) {
+  async findOne(id: string, withWallet: boolean = false) {
     try {
       const response = await firstValueFrom(
-        this.httpService.get(`/${id}`)
+        this.httpService.get(`/${id}?withwallet=${withWallet}`)
+      );
+
+      return response.data;      
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async findOneByEmail(email: string, withWallet: boolean = false, withPassword: boolean = false) {
+    try {
+      const response = await firstValueFrom(
+        this.httpService.get(`/email/${email}?withwallet=${withWallet}&withpassword=${withPassword}`)
       );
 
       return response.data;      
