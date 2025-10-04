@@ -1,0 +1,942 @@
+{
+	"info": {
+		"_postman_id": "6dc8b3bb-56e8-4791-8061-4f1d4e46b183",
+		"name": "VIRTUAL WALLET - SERVICE DATA ACCESS LAYER",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13668739",
+		"_collection_link": "https://solar-eclipse-986291.postman.co/workspace/SIDES-PROJECTS~0fce302f-67c2-4daf-84cd-fdd51da4474f/collection/13668739-6dc8b3bb-56e8-4791-8061-4f1d4e46b183?action=share&source=collection_link&creator=13668739"
+	},
+	"item": [
+		{
+			"name": "clients",
+			"item": [
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/clients",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients"
+							]
+						},
+						"description": "Obtener una lista de todos los clientes registrados en el sistema.\n\nMétodo: GET\nParámetros: Ninguno.\nRespuesta esperada: Lista de clientes con sus detalles básicos.\n\nEjemplo de uso:\nGET {{base_url}}/clients"
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/clients/7cb9d325-b20c-49b9-850a-b9ada16c7232?withwallet=true",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"7cb9d325-b20c-49b9-850a-b9ada16c7232"
+							],
+							"query": [
+								{
+									"key": "withwallet",
+									"value": "true"
+								}
+							]
+						},
+						"description": "Obtener información detallada de un cliente específico por su ID. Puede incluir detalles de la wallet si se indica.\n\nMétodo: GET\nParámetros: clientId (en la URL), withwallet (opcional, query param booleano).\nRespuesta esperada: Detalles del cliente, y si se solicita, información de la wallet asociada.\n\nEjemplo de uso:\nGET {{base_url}}/clients/7cb9d325-b20c-49b9-850a-b9ada16c7232?withwallet=true"
+					},
+					"response": []
+				},
+				{
+					"name": "get by email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/clients/email/ramosdumas_ismael@hotmail.com",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"email",
+								"ramosdumas_ismael@hotmail.com"
+							]
+						},
+						"description": "Obtener información de un cliente utilizando su correo electrónico.\n\nMétodo: GET\nParámetros: email (en la URL).\nRespuesta esperada: Detalles del cliente correspondiente al email proporcionado.\n\nEjemplo de uso:\nGET {{base_url}}/clients/email/ramosdumas_ismael@hotmail.com"
+					},
+					"response": []
+				},
+				{
+					"name": "get by wallet",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/clients/wallet/fafasfasdfsf",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"wallet",
+								"fafasfasdfsf"
+							]
+						},
+						"description": "Obtener información de un cliente utilizando el ID de su wallet.\n\nMétodo: GET\nParámetros: walletId (en la URL).\nRespuesta esperada: Detalles del cliente asociado al walletId proporcionado.\n\nEjemplo de uso:\nGET {{base_url}}/clients/wallet/fafasfasdfsf"
+					},
+					"response": []
+				},
+				{
+					"name": "get by document",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/clients/document/125454545",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"document",
+								"125454545"
+							]
+						},
+						"description": "Obtener información de un cliente utilizando su número de documento.\n\nMétodo: GET\nParámetros: documento (en la URL).\nRespuesta esperada: Detalles del cliente correspondiente al documento proporcionado.\n\nEjemplo de uso:\nGET {{base_url}}/clients/document/123456789"
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"document\": \"125454545\",\r\n    \"fullName\" : \"Ismael Ramos\",\r\n    \"email\" : \"ramosdumas.ismael@hotmail.com\",\r\n    \"password\": \"Passw0RD$$\",\r\n    \"walletId\": \"1a610f05-dcf1-4cd5-b3c1-58f3e6173392\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/clients",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients"
+							]
+						},
+						"description": "Crear un nuevo cliente en el sistema.\n\nMétodo: POST\nParámetros: En el cuerpo de la petición se envían los datos del cliente a crear.\nRespuesta esperada: Detalles del cliente creado con su ID único.\n\nEjemplo de uso:\nPOST {{base_url}}/clients\nCuerpo:\n{\n  \"nombre\": \"Juan Pérez\",\n  \"email\": \"juan.perez@example.com\",\n  \"documento\": \"123456789\",\n  \"telefono\": \"555-1234\"\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"document\": \"125454545\",\r\n    \"fullName\" : \"Ismael F. Ramos\",\r\n    \"email\" : \"ramosdumas_ismael@hotmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/clients/efcea396-da5b-4b9a-8a2b-6dad78086cdd",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"efcea396-da5b-4b9a-8a2b-6dad78086cdd"
+							]
+						},
+						"description": "Actualizar los datos de un cliente existente en el sistema.\n\nMétodo: PATCH\nParámetros: clientId (en la URL), datos a actualizar en el cuerpo de la petición.\nRespuesta esperada: Detalles del cliente actualizado.\n\nEjemplo de uso:\nPATCH {{base_url}}/clients/efcea396-da5b-4b9a-8a2b-6dad78086cdd\nCuerpo:\n{\n  \"telefono\": \"555-5678\"\n}"
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/clients/efcea396-da5b-4b9a-8a2b-6dad78086cdd",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"efcea396-da5b-4b9a-8a2b-6dad78086cdd"
+							]
+						},
+						"description": "Eliminar un cliente del sistema.\n\nMétodo: DELETE\nParámetros: clientId (en la URL).\nRespuesta esperada: Confirmación de eliminación exitosa o mensaje de error si el cliente no existe.\n\nEjemplo de uso:\nDELETE {{base_url}}/clients/efcea396-da5b-4b9a-8a2b-6dad78086cdd"
+					},
+					"response": []
+				}
+			],
+			"description": "## Clients Folder Overview\n\nThis folder contains all endpoints related to managing client accounts within the Virtual Wallet service. It provides a comprehensive set of operations for creating, retrieving, updating, and deleting client information, as well as searching for clients by various identifiers.\n\n### Purpose\nThe 'clients' folder is designed to facilitate the full lifecycle management of client entities in the system. It supports both administrative and user-facing operations, ensuring that client data can be efficiently accessed and maintained.\n\n### Request Summary\n- **Create Client:** Add a new client to the system.\n- **Get Client by ID:** Retrieve detailed information for a specific client, with optional wallet details.\n- **Get Client by Document:** Fetch client data using a document identifier.\n- **Get Client by Wallet:** Retrieve client information based on wallet ID.\n- **Get Client by Email:** Find a client using their email address.\n- **List Clients:** Obtain a list of all clients in the system.\n- **Update Client:** Modify existing client details.\n- **Delete Client:** Remove a client from the system.\n\nThese endpoints enable robust client management and are essential for user onboarding, profile management, and administrative tasks."
+		},
+		{
+			"name": "wallets",
+			"item": [
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/wallets",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"wallets"
+							]
+						},
+						"description": "**Método:** GET\n**URL:** {{base_url}}/wallets\n**Propósito:** Obtiene la lista de todas las wallets registradas en el sistema.\n**Ejemplo de payload:** No aplica para solicitudes GET."
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/wallets/344e023c-bd25-4238-8936-06eca6caacc6",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"wallets",
+								"344e023c-bd25-4238-8936-06eca6caacc6"
+							]
+						},
+						"description": "**Método:** GET\n**URL:** {{base_url}}/wallets/344e023c-bd25-4238-8936-06eca6caacc6\n**Propósito:** Obtiene la información detallada de una wallet específica mediante su ID.\n**Ejemplo de payload:** No aplica para solicitudes GET."
+					},
+					"response": []
+				},
+				{
+					"name": "get by phone",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/wallets/phone/125454545",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"wallets",
+								"phone",
+								"125454545"
+							]
+						},
+						"description": "**Método:** GET\n**URL:** {{base_url}}/wallets/phone/+505%2083286008\n**Propósito:** Recupera la información de una wallet utilizando el número de teléfono asociado.\n**Ejemplo de payload:** No aplica para solicitudes GET."
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phone\" : \"+505 83286008\",\r\n    \"balance\" : 150.85\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/wallets",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"wallets"
+							]
+						},
+						"description": "**Método:** POST\n**URL:** {{base_url}}/wallets\n**Propósito:** Crea una nueva wallet con los datos proporcionados.\n**Ejemplo de payload:**\n```json\n{\n  \"phone\" : \"+505 83286008\",\n  \"balance\" : 150.85\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"phone\" : \"+505 83286004\",\r\n    \"balance\" : 150000.857851\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/wallets/344e023c-bd25-4238-8936-06eca6caacc6",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"wallets",
+								"344e023c-bd25-4238-8936-06eca6caacc6"
+							]
+						},
+						"description": "**Método:** PATCH\n**URL:** {{base_url}}/wallets/344e023c-bd25-4238-8936-06eca6caacc6\n**Propósito:** Actualiza parcialmente los datos de una wallet específica mediante su ID.\n**Ejemplo de payload:**\n```json\n{\n  \"phone\" : \"+505 83286008\",\n  \"balance\" : 150.85\n}\n```"
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/wallets/912ffb97-a026-4508-aec2-a199f3516279",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"wallets",
+								"912ffb97-a026-4508-aec2-a199f3516279"
+							]
+						},
+						"description": "**Método:** DELETE\n**URL:** {{base_url}}/wallets/344e023c-bd25-4238-8936-06eca6caacc6\n**Propósito:** Elimina una wallet específica mediante su ID.\n**Ejemplo de payload:** No aplica para solicitudes DELETE."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sessions",
+			"item": [
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sessions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sessions"
+							]
+						},
+						"description": "Obtiene la lista de todas las sesiones activas o registradas en el sistema."
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sessions/efcea396-da5b-4b9a-8a2b-6dad78086cdd",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sessions",
+								"efcea396-da5b-4b9a-8a2b-6dad78086cdd"
+							]
+						},
+						"description": "Obtiene la información detallada de una sesión específica utilizando su identificador único (ID). Método: GET. Ruta: /sessions/:sessionId"
+					},
+					"response": []
+				},
+				{
+					"name": "get actives",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sessions/active",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sessions",
+								"active"
+							]
+						},
+						"description": "Obtiene todas las sesiones activas en el sistema. Método: GET. Ruta: /sessions/active"
+					},
+					"response": []
+				},
+				{
+					"name": "get expired",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sessions/expired",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sessions",
+								"expired"
+							]
+						},
+						"description": "Obtiene todas las sesiones que han expirado en el sistema. Método: GET. Ruta: /sessions/expired"
+					},
+					"response": []
+				},
+				{
+					"name": "get by wallet",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sessions/wallet/709aa6f3-672c-4e79-bcb9-11b71e439879",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sessions",
+								"wallet",
+								"709aa6f3-672c-4e79-bcb9-11b71e439879"
+							]
+						},
+						"description": "Obtiene la información de la sesión asociada a una billetera específica. Método: GET. Ruta: /sessions/wallet/:walletId"
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"walletId\": \"23c810de-d01b-49a3-98ee-0f6ce8c1e305\",\r\n    \"expiresAt\": \"2025-10-02T12:41:40.927Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/sessions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sessions"
+							]
+						},
+						"description": "Crea una nueva sesión en el sistema. Método: POST. Ruta: /sessions"
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"walletId\": \"23c810de-d01b-49a3-98ee-0f6ce8c1e305\",\r\n    \"expiresAt\": \"2026-10-02T12:41:40.927Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/sessions/fbc6a26b-b099-4e13-8e00-8ec050d54679",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sessions",
+								"fbc6a26b-b099-4e13-8e00-8ec050d54679"
+							]
+						},
+						"description": "Actualiza la información de una sesión existente utilizando su identificador único (ID). Método: PATCH. Ruta: /sessions/:sessionId"
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sessions/fbc6a26b-b099-4e13-8e00-8ec050d54679",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sessions",
+								"fbc6a26b-b099-4e13-8e00-8ec050d54679"
+							]
+						},
+						"description": "Elimina una sesión específica utilizando su identificador único (ID). Método: DELETE. Ruta: /sessions/:sessionId"
+					},
+					"response": []
+				},
+				{
+					"name": "clean expired sessions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/sessions/cleanup",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"sessions",
+								"cleanup"
+							]
+						},
+						"description": "Elimina todas las sesiones que han expirado en el sistema. Método: POST. Ruta: /sessions/cleanup"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tokens",
+			"item": [
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tokens",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tokens"
+							]
+						},
+						"description": "Lista todos los tokens registrados en el sistema. Utiliza el método GET sobre la ruta /tokens. Permite obtener una visión general de todos los tokens existentes."
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tokens/68c119bd-3a93-4e0f-a7fe-49a2b3396be9",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tokens",
+								"68c119bd-3a93-4e0f-a7fe-49a2b3396be9"
+							]
+						},
+						"description": "Obtiene información detallada de un token específico. Utiliza el método GET sobre la ruta /tokens/{tokenId}. Permite consultar los datos asociados a un token."
+					},
+					"response": []
+				},
+				{
+					"name": "get actives",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tokens/active",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tokens",
+								"active"
+							]
+						},
+						"description": "Obtiene la lista de tokens activos en el sistema. Utiliza el método GET sobre la ruta /tokens/active. Permite visualizar todos los tokens que están actualmente vigentes."
+					},
+					"response": []
+				},
+				{
+					"name": "get expired",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tokens/expired",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tokens",
+								"expired"
+							]
+						},
+						"description": "Obtiene la lista de tokens expirados en el sistema. Utiliza el método GET sobre la ruta /tokens/expired. Permite identificar los tokens que ya no son válidos."
+					},
+					"response": []
+				},
+				{
+					"name": "get by session",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tokens/session/709aa6f3-672c-4e79-bcb9-11b71e439879",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tokens",
+								"session",
+								"709aa6f3-672c-4e79-bcb9-11b71e439879"
+							]
+						},
+						"description": "Obtiene los tokens asociados a una sesión específica. Utiliza el método GET sobre la ruta /tokens/session/{sessionId}. Permite consultar los tokens generados o vinculados a una sesión dada."
+					},
+					"response": []
+				},
+				{
+					"name": "validate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tokens/validate/ba22b712-79f0-4b9a-ae99-e2d3d41802bf",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tokens",
+								"validate",
+								"ba22b712-79f0-4b9a-ae99-e2d3d41802bf"
+							]
+						},
+						"description": "Valida la validez de un token específico. Utiliza el método GET sobre la ruta /tokens/validate/{tokenId}. Permite comprobar si un token es válido o ha expirado."
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\": \"ba22b712-79f0-4b9a-ae99-e2d3d41802bf\",\r\n    \"sessionId\":\"b891f165-14c7-4488-a0fd-7bf0a35a0479\",\r\n    \"expiresAt\": \"2025-10-02T12:41:40.927Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/tokens",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tokens"
+							]
+						},
+						"description": "Crea un nuevo token en el sistema. Utiliza el método POST sobre la ruta /tokens. Se utiliza para generar credenciales temporales o de acceso para usuarios o servicios."
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\": \"ba22b712-79f0-4b9a-ae99-e2d3d41802bfTTTTT\",\r\n    \"sessionId\": \"98d11fb9-bea8-44bd-a898-da2511783f96\",\r\n    \"expiresAt\": \"2025-10-01T18:41:40.927Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/tokens/7f024187-91e3-4559-8cf1-ecd36ccdab22",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tokens",
+								"7f024187-91e3-4559-8cf1-ecd36ccdab22"
+							]
+						},
+						"description": "Actualiza un token específico. Utiliza el método PATCH sobre la ruta /tokens/{tokenId}. Permite modificar los datos asociados a un token existente."
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tokens/9a51213f-72f3-4be5-be61-dfe1266ab484",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tokens",
+								"9a51213f-72f3-4be5-be61-dfe1266ab484"
+							]
+						},
+						"description": "Elimina un token específico del sistema. Utiliza el método DELETE sobre la ruta /tokens/{tokenId}. Permite revocar el acceso asociado a ese token."
+					},
+					"response": []
+				},
+				{
+					"name": "clean expired sessions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tokens/cleanup",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tokens",
+								"cleanup"
+							]
+						},
+						"description": "Limpia las sesiones expiradas del sistema. Utiliza el método POST sobre la ruta /tokens/cleanup. Permite eliminar tokens y sesiones que ya no son válidos."
+					},
+					"response": []
+				}
+			],
+			"description": "Carpeta que contiene endpoints relacionados con la gestión de tokens.\n\nEndpoints:\n- create (POST /tokens): Crear un nuevo token.\n- validate (GET /tokens/validate/{tokenId}): Validar la validez de un token específico.\n- get actives (GET /tokens/active): Obtener la lista de tokens activos.\n- delete (DELETE /tokens/{tokenId}): Eliminar un token específico.\n- get (GET /tokens/{tokenId}): Obtener información de un token específico.\n- get expired (GET /tokens/expired): Obtener la lista de tokens expirados.\n- get by session (GET /tokens/session/{sessionId}): Obtener tokens asociados a una sesión específica.\n- clean expired sessions (POST /tokens/cleanup): Limpiar sesiones expiradas.\n- list (GET /tokens): Listar todos los tokens.\n- update (PATCH /tokens/{tokenId}): Actualizar un token específico."
+		},
+		{
+			"name": "transactions",
+			"item": [
+				{
+					"name": "list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/transactions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions"
+							]
+						},
+						"description": "GET /transactions - Obtiene una lista de todas las transacciones registradas."
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/transactions/68c119bd-3a93-4e0f-a7fe-49a2b3396be9",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"68c119bd-3a93-4e0f-a7fe-49a2b3396be9"
+							]
+						},
+						"description": "GET /transactions/:id - Recupera los detalles de una transacción específica utilizando su identificador único."
+					},
+					"response": []
+				},
+				{
+					"name": "get by wallet",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/transactions/wallet/fasdfsfd",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"wallet",
+								"fasdfsfd"
+							]
+						},
+						"description": "GET /transactions/wallet/:walletId - Obtiene todas las transacciones asociadas a una billetera específica, identificada por su ID."
+					},
+					"response": []
+				},
+				{
+					"name": "get by session",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/transactions/session/98d11fb9-bea8-44bd-a898-da2511783f96",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"session",
+								"98d11fb9-bea8-44bd-a898-da2511783f96"
+							]
+						},
+						"description": "GET /transactions/session/:sessionId - Recupera todas las transacciones asociadas a una sesión específica, identificada por su ID de sesión."
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"walletId\": \"ba22b712-79f0-4b9a-ae99-e2d3d41802bf\",\r\n    \"type\":\"credit\",\r\n    \"amount\": 10.80,\r\n    \"sessionId\": \"98d11fb9-bea8-44bd-a898-da2511783f96\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/transactions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions"
+							]
+						},
+						"description": "POST /transactions - Crea una nueva transacción con los datos proporcionados en el cuerpo de la solicitud."
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"walletId\": \"23c810de-d01b-49a3-98ee-0f6ce8c1e305\",\r\n    \"expiresAt\": \"2026-10-02T12:41:40.927Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/tokens/7f024187-91e3-4559-8cf1-ecd36ccdab22",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tokens",
+								"7f024187-91e3-4559-8cf1-ecd36ccdab22"
+							]
+						},
+						"description": "PATCH /tokens/:id - Actualiza parcialmente los datos de un token específico identificado por su ID. Utiliza el método PATCH para modificar solo los campos necesarios."
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/transactions/05570af9-e794-4bae-a0c8-542a3c614f3a",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"transactions",
+								"05570af9-e794-4bae-a0c8-542a3c614f3a"
+							]
+						},
+						"description": "DELETE /transactions/:id - Elimina una transacción específica utilizando su identificador único."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "key",
+				"value": "x-api-key",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "{{api_key}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": ""
+		},
+		{
+			"key": "api_key",
+			"value": ""
+		}
+	]
+}

@@ -44,11 +44,9 @@ export class TransactionService {
 
   async findByWalletId(walletId: string | null) {
     try {
-      console.log("Finding transactions for walletId:", walletId);
       const response = await firstValueFrom(
         this.httpService.get(`/wallet/${walletId}`)
       );
-      console.log("Response data:", response.data);
       return response.data;
     } catch (error) {
       throw error;

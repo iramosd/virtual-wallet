@@ -15,7 +15,7 @@ export interface AppConfig {
 export const appConfig: AppConfig = {
   port: process.env.API_PORT ? parseInt(process.env.API_PORT) : 8001,
   database: {
-    host: process.env.DB_HOST || 'localhost',
+    host: process.env.DB_HOST || 'mysql',
     port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3306,
     username: process.env.DB_USERNAME || 'admin',
     password: process.env.DB_PASSWORD || '',
