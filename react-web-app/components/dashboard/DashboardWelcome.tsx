@@ -10,7 +10,7 @@ export default function DashboardWelcome() {
   return (
     <div className="mb-8">
       <h2 className="text-2xl font-bold text-gray-900 mb-2">
-        ¡Bienvenido, {user.name}!
+        ¡Bienvenido, {user.fullName}!
       </h2>
       <p className="text-gray-600">
         Aquí tienes un resumen de tu cuenta y actividades recientes.
