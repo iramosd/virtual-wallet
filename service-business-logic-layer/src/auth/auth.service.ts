@@ -1,11 +1,12 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { SignUpDto } from './dto/signup-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
+import { LoginAuthDto } from './dto/login-auth.dto';
 import { ClientService } from '../client/client.service';
 import { WalletService } from '../wallet/wallet.service';
-import { ConfigService } from '@nestjs/config';
-import { LoginAuthDto } from './dto/login-auth.dto';
+import { SessionService } from '../session/session.service';
 
 @Injectable()
 export class AuthService {
@@ -13,7 +14,9 @@ export class AuthService {
   constructor(
     private readonly clientService: ClientService, 
     private readonly walletService: WalletService, 
-    private readonly configService: ConfigService) {}
+    private readonly sessionService: SessionService,
+    private readonly configService: ConfigService,
+  ) {}
 
   async signUp(signUpDto: SignUpDto) {
     let client;
@@ -43,8 +46,21 @@ export class AuthService {
     }
     
     if (isMatch) {
+
       delete clientResponse.data.password;
+      const sessionResponse = await this.sessionService.create({ 
+        walletId: clientResponse.data.wallet.id, 
+        expiresAt: new Date(new Date().getTime() + 60*60*1000) 
+      });
+
+      if (sessionResponse?.status !== 'success') {
+        throw new UnauthorizedException('No se pudo crear la sesión');
+      }
+
+      clientResponse.data.session = sessionResponse.data;
+
       return clientResponse;
+
     } else {
       throw new UnauthorizedException('Los datos no son correctos');
     }
