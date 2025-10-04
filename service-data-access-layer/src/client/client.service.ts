@@ -70,6 +70,21 @@ export class ClientService {
     return this.excludePassword(client) as ResponseClientDto;
   }
 
+  async findByWallet(walletId: string, withWallet: boolean = false): Promise<ResponseClientDto> {
+    const client = await this.prisma.client.findUnique({
+      where: { walletId },
+      include: {
+        wallet: withWallet, 
+      },
+    });
+
+    if (!client) {
+      throw new NotFoundException();
+    }
+    
+    return this.excludePassword(client) as ResponseClientDto;
+  }
+
   async findByEmail(email: string, withWallet: boolean = false, withPassword: boolean = false): Promise<ResponseClientDto> {
     const client = await this.prisma.client.findUnique({
       where: { email },

@@ -31,6 +31,14 @@ export class ClientController {
     return this.clientService.findByEmail(email, withWallet, withPassword);
   }
 
+  @Get('wallet/:walletId')
+  async findByWallet(
+    @Param('walletId') walletId: string,
+    @Query('withwallet') withWallet: boolean = false,
+  ): Promise<any> {
+    return this.clientService.findByWallet(walletId, withWallet);
+  }
+
   @Get(':id')
   async findOne(
     @Param('id') id: string,

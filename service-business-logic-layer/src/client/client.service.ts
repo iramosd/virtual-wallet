@@ -59,6 +59,18 @@ export class ClientService {
     }
   }
 
+  async findOneByWallet(walletId: string, withWallet: boolean = false) {
+    try {
+      const response = await firstValueFrom(
+        this.httpService.get(`/wallet/${walletId}?withwallet=${withWallet}`)
+      );
+
+      return response.data;      
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async update(id: string, updateClientDto: UpdateClientDto) {
      try {
       const response = await firstValueFrom(
