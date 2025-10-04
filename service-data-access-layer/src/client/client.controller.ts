@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, Query } from '@nestjs/common';
 import { ClientService } from './client.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
@@ -23,13 +23,28 @@ export class ClientController {
   }
 
   @Get('email/:email')
-  async findByEmail(@Param('email') email: string): Promise<any> {
-    return this.clientService.findByEmail(email);
+  async findByEmail(
+    @Param('email') email: string,
+    @Query('withwallet') withWallet: boolean = false,
+    @Query('withpassword') withPassword: boolean = false
+  ): Promise<any> {
+    return this.clientService.findByEmail(email, withWallet, withPassword);
+  }
+
+  @Get('wallet/:walletId')
+  async findByWallet(
+    @Param('walletId') walletId: string,
+    @Query('withwallet') withWallet: boolean = false,
+  ): Promise<any> {
+    return this.clientService.findByWallet(walletId, withWallet);
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<any> {
-    return this.clientService.findOne(id);
+  async findOne(
+    @Param('id') id: string,
+    @Query('withwallet') withWallet: boolean = false,
+  ): Promise<any> {
+    return this.clientService.findOne(id, withWallet);
   }
 
   @Patch(':id')

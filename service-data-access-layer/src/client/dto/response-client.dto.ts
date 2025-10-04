@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class ResponseClientDto {
   @IsNotEmpty()
@@ -12,4 +12,8 @@ export class ResponseClientDto {
   @IsNotEmpty()
   @IsEmail()
   email: string;
+
+  @IsOptional()
+  @IsString()
+  walletId?: string | null;
 }

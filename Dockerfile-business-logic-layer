@@ -1,0 +1,7 @@
+FROM docker.io/node:20.19-bullseye
+
+RUN apt update && apt install -y dos2unix
+
+COPY docker-scripts/building-service-bussines-logic.sh /usr/local/bin/build-project.sh
+
+RUN dos2unix /usr/local/bin/build-project.sh && chmod +x /usr/local/bin/build-project.sh
